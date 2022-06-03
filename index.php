@@ -36,12 +36,87 @@
     // Associative Array
     $person =[
         'name' => "Chris",
-        'age' => '24'
+        'age' => '25'
     ];
 
     // var_dump($squad);
-    echo $person['age'];
+    // echo $person['age'];
 
 
     // --------- Functions ---------------
+    $user = 'Legazy';
+    function register(){
+        global $user;
+        echo "${user} is a new user";
+    }
+    
+    // needing to pass in a variable is a arguement
+    function create($bot){
+        echo "just created ${bot}";
+    }
+
+    // register();
+
+    //if you pass in a value into function that is a parameter 
+    // create('test');
+
+    $multiply = fn($x, $y) => $x * $y;
+
+    // echo $multiply(3,3);
+
+
+    // ----------- ARRAY METHODS -----------
+    // count($array), in_array($value, $array )
+    
+    $list = [1,2,3];
+    $list2 = [7,8,9];
+
+    // echo count($list);   //outputs length
+
+    // echo(in_array(1, $list));  //search if value is in array
+
+    // add value to array 
+    $list[] = 4;
+    array_push($list, 5);
+
+    //adds to begining of array 
+    array_unshift($list, 0);
+
+    //remove from end of array 
+    array_pop($list);
+    // remove from begin of array 
+    array_shift($list);
+
+    //remove specific element 
+    unset($list[0]);
+
+    //split array into 2 
+    array_chunk($list, 2);
+
+    // merge arrays 
+    $list3 = [...$list, ...$list2];
+
+    // print_r($list3);
+
+
+    //get range of new list
+    $range = range(1,20);
+    // print_r($range);
+
+    $newNum = array_map(function($num) {
+        return "Number ${num}";
+    }, $range);
+
+    // print_r($newNum);
+    $lessThan10 = array_filter($range, fn($num) => 
+        $num <= 10);
+
+    print_r($lessThan10);
+
+
+    // --------- string functions ---------
+    
+
+
+
 ?>
