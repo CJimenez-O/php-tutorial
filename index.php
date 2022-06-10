@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
 
 <!-- <a href="<?php echo $_SERVER['PHP_SELF']; ?> ?name=Brad">Link</a> -->
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+<!-- <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 <div>
   <label>Name: </label>
   <input type="text" name="name">
@@ -198,4 +198,149 @@ if (isset($_POST['submit'])) {
 </div>
 <br>
   <input type="submit" name="submit" value="Submit">
+</form> -->
+
+
+
+
+
+
+
+
+
+<!-- ------------ Sessions ------------  -->
+<!-- Sessions are a way to store information (in variables) to be used across multiple pages.
+  Unlike cookies, sessions are stored on the server. -->
+
+
+
+<?php
+session_start(); // Must be called before accessing any session data
+
+if (isset($_POST['submit'])) {
+  $username = filter_input(
+    INPUT_POST,
+    'username',
+    FILTER_SANITIZE_FULL_SPECIAL_CHARS
+  );
+  $password = filter_input(
+    INPUT_POST,
+    'password',
+    FILTER_SANITIZE_FULL_SPECIAL_CHARS
+  );
+
+  if ($username == 'brad' && $password == 'password') {
+    // Set Session variable
+    $_SESSION['username'] = $username;
+    // Redirect user to another page
+    header('Location: /php-crash/extras/dashboard.php');
+  } else {
+    echo 'Incorrect username or password';
+  }
+}
+?>
+
+  <form action="<?php echo htmlspecialchars(
+    $_SERVER['PHP_SELF']
+  ); ?>" method="POST">
+    <div>
+      <label>Username: </label>
+      <input type="text" name="username">
+    </div>
+    <br>
+    <div>
+      <label>Password: </label>
+      <input type="password" name="password">
+    </div>
+    <br>
+    <input type="submit" name="submit" value="Submit">
 </form>
+  <?php 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Object Oriented Programming -- */
+
+/*
+  From PHP5 onwards you can write PHP in either a procedural or object oriented way. OOP consists of classes that can hold "properties" and "methods". Objects can be created from classes.
+*/
+
+class User {
+  // Properties are just variables that belong to a class.
+  // Access Modifiers: public, private, protected
+  // public - can be accessed from anywhere
+  // private - can only be accessed from inside the class
+  // protected - can only be accessed from inside the class and by inheriting classes
+  private $name;
+  public $email;
+  public $password;
+
+  // The constructor is called whenever an object is created from the class.
+  // We pass in properties to the constructor from the outside.
+  public function __construct($name, $email, $password) {
+    // We assign the properties passed in from the outside to the properties we created inside the class.
+    $this->name = $name;
+    $this->email = $email;
+    $this->password = $password;
+  }
+
+  // Methods are functions that belong to a class.
+  // function setName() {
+  //   $this->name = $name;
+  // }
+
+  function getName() {
+    return $this->name;
+  }
+
+  function login() {
+    return "User $this->name is logged in.";
+  }
+
+  // Destructor is called when an object is destroyed or the end of the script.
+  function __destruct() {
+    echo "The user name is {$this->name}.";
+  }
+}
+
+// Instantiate a new user
+$user1 = new User('Brad', 'brad@gmail.com', '123456');
+echo $user1->getName();
+echo $user1->login();
+
+// Add a value to a property
+// $user1->name = 'Brad';
+
+var_dump($user1);
+// echo $user1->name;
+
+/* ----------- Inheritence ---------- */
+
+/*
+  Inheritence is the ability to create a new class from an existing class.
+  It is achieved by creating a new class that extends an existing class.
+*/
+
+class employee extends User {
+  public function __construct($name, $email, $password, $title) {
+    parent::__construct($name, $email, $password);
+    $this->title = $title;
+  }
+
+  public function getTitle() {
+    return $this->title;
+  }
+}
+
+$employee1 = new employee('John','johndoe@gmail.com','123456','Manager');
+echo $employee1->getTitle();
